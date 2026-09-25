@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +7,6 @@
 <title>PulseVote — Interactive Presentation Platform</title>
 
 <style>
-
-/* =========================
-   RESET
-========================= */
-
 *{
   box-sizing:border-box;
 }
@@ -29,7 +23,9 @@ body{
   overflow-x:hidden;
 }
 
-button,input,select{
+button,
+input,
+select{
   font:inherit;
 }
 
@@ -46,17 +42,16 @@ button{
    LOGIN
 ========================= */
 
-.loginPage{
+#loginPage{
   position:fixed;
   inset:0;
   z-index:9999;
-
-  min-height:100vh;
 
   display:flex;
   justify-content:center;
   align-items:center;
 
+  min-height:100vh;
   padding:20px;
 
   overflow-y:auto;
@@ -64,12 +59,12 @@ button{
   background:
     radial-gradient(
       circle at 15% 20%,
-      rgba(124,77,255,.22),
+      rgba(124,77,255,.25),
       transparent 35%
     ),
     radial-gradient(
       circle at 85% 80%,
-      rgba(39,217,195,.14),
+      rgba(39,217,195,.16),
       transparent 35%
     ),
     #080d1d;
@@ -77,36 +72,22 @@ button{
 
 .loginCard{
   width:100%;
-  max-width:470px;
+  max-width:450px;
 
-  padding:38px;
+  padding:35px;
 
-  background:rgba(21,27,50,.98);
+  background:#151b32;
 
   border:1px solid #303d75;
   border-radius:28px;
 
   box-shadow:
-    0 0 70px rgba(124,77,255,.18),
-    0 20px 80px rgba(0,0,0,.5);
-
-  animation:loginAppear .6s ease;
-}
-
-@keyframes loginAppear{
-  from{
-    opacity:0;
-    transform:translateY(25px) scale(.97);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
+    0 20px 80px rgba(0,0,0,.5),
+    0 0 60px rgba(124,77,255,.15);
 }
 
 .loginLogo{
-  font-size:34px;
+  font-size:35px;
   font-weight:900;
   margin-bottom:12px;
 }
@@ -120,20 +101,17 @@ button{
   align-items:center;
   gap:8px;
 
+  padding:7px 12px;
+
+  border-radius:30px;
+
   color:#27d9c3;
 
   background:rgba(39,217,195,.08);
-
-  border:1px solid rgba(39,217,195,.25);
-
-  padding:7px 12px;
-
-  border-radius:50px;
+  border:1px solid rgba(39,217,195,.3);
 
   font-size:12px;
-  font-weight:700;
-
-  margin-bottom:25px;
+  font-weight:bold;
 }
 
 .liveDot{
@@ -146,10 +124,10 @@ button{
 
   box-shadow:0 0 12px #27d9c3;
 
-  animation:livePulse 1.5s infinite;
+  animation:pulse 1.5s infinite;
 }
 
-@keyframes livePulse{
+@keyframes pulse{
   0%,100%{
     opacity:1;
   }
@@ -160,11 +138,12 @@ button{
 }
 
 .loginCard h1{
-  margin:0 0 10px;
-  font-size:36px;
+  margin:25px 0 10px;
+
+  font-size:35px;
 }
 
-.loginSubtitle{
+.loginText{
   color:#aab2cc;
   line-height:1.6;
   margin-bottom:25px;
@@ -172,15 +151,16 @@ button{
 
 .loginCard label{
   display:block;
-  color:#f5f7ff;
-  font-weight:600;
-  margin:18px 0 8px;
+
+  margin:15px 0 8px;
+
+  font-weight:bold;
 }
 
 .loginInput{
   width:100%;
 
-  padding:15px 16px;
+  padding:15px;
 
   border-radius:14px;
 
@@ -191,12 +171,6 @@ button{
   color:white;
 
   outline:none;
-
-  transition:.2s;
-}
-
-.loginInput::placeholder{
-  color:#6f7897;
 }
 
 .loginInput:focus{
@@ -206,9 +180,12 @@ button{
     0 0 0 3px rgba(124,77,255,.15);
 }
 
+.loginInput::placeholder{
+  color:#68728f;
+}
+
 .passwordBox{
   display:flex;
-  width:100%;
 }
 
 .passwordBox .loginInput{
@@ -241,20 +218,20 @@ button{
 
 .remember{
   display:flex !important;
+
   align-items:center;
 
-  gap:7px;
+  gap:6px;
 
   margin:0 !important;
 
   color:#aab2cc !important;
 }
 
-.loginOptions a,
-.createAccount a{
+.loginOptions a{
   color:#27d9c3;
+
   text-decoration:none;
-  font-weight:700;
 }
 
 .loginButton{
@@ -270,8 +247,8 @@ button{
 
   color:white;
 
-  font-weight:800;
   font-size:17px;
+  font-weight:900;
 
   background:
     linear-gradient(
@@ -281,37 +258,32 @@ button{
     );
 
   box-shadow:
-    0 8px 25px rgba(124,77,255,.25);
-
-  transition:.2s;
-}
-
-.loginButton:hover{
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 12px 35px rgba(124,77,255,.4);
+    0 10px 30px rgba(124,77,255,.3);
 }
 
 .loginButton:active{
   transform:scale(.98);
 }
 
-.orDivider{
+.divider{
   display:flex;
+
   align-items:center;
-  gap:12px;
+
+  gap:10px;
 
   margin:25px 0;
 
   color:#69728f;
 
-  font-size:13px;
+  font-size:12px;
 }
 
-.orDivider span{
+.divider span{
   flex:1;
+
   height:1px;
+
   background:#303957;
 }
 
@@ -322,9 +294,9 @@ button{
 
   border-radius:14px;
 
-  background:transparent;
-
   border:1px solid #344a91;
+
+  background:transparent;
 
   color:white;
 }
@@ -341,7 +313,15 @@ button{
   margin-top:25px;
 }
 
-.onlineUsers{
+.createAccount a{
+  color:#27d9c3;
+
+  font-weight:bold;
+
+  text-decoration:none;
+}
+
+.online{
   display:flex;
 
   justify-content:center;
@@ -358,23 +338,21 @@ button{
 
 
 /* =========================
-   MAIN APP
+   HEADER
 ========================= */
-
-#app{
-  min-height:100vh;
-}
 
 .top{
   min-height:68px;
 
+  padding:0 25px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
   gap:15px;
-
-  padding:0 25px;
 
   background:#0b1020;
 
@@ -387,7 +365,7 @@ button{
 }
 
 .logo{
-  font-size:23px;
+  font-size:24px;
   font-weight:900;
 }
 
@@ -396,41 +374,44 @@ button{
 }
 
 .badge{
-  color:#cbd2ea;
-
-  background:#151b32;
-
   padding:9px 14px;
 
   border-radius:30px;
+
+  background:#151b32;
+
+  color:#cbd2ea;
 
   font-size:13px;
 }
 
 .userArea{
   display:flex;
+
   align-items:center;
+
   gap:10px;
 }
 
 .userName{
   color:#aab2cc;
+
   font-size:13px;
 }
 
-.logoutBtn{
+.logout{
+  padding:9px 13px;
+
   border:1px solid #343d61;
+
+  border-radius:10px;
 
   background:transparent;
 
   color:white;
-
-  padding:8px 12px;
-
-  border-radius:9px;
 }
 
-.logoutBtn:hover{
+.logout:hover{
   background:#202946;
 }
 
@@ -444,7 +425,7 @@ button{
 
   margin:auto;
 
-  padding:30px 20px 60px;
+  padding:30px 20px 70px;
 }
 
 .hero{
@@ -467,32 +448,29 @@ button{
 
   border:1px solid #252e4d;
 
-  border-radius:26px;
-
-  box-shadow:
-    0 15px 50px rgba(0,0,0,.18);
+  border-radius:25px;
 }
 
 .heroText{
-  padding:38px;
+  padding:40px;
 }
 
 .eyebrow{
   color:#27d9c3;
 
-  font-weight:800;
+  font-size:14px;
+
+  font-weight:bold;
 
   letter-spacing:2px;
-
-  font-size:14px;
 }
 
 .hero h1{
-  font-size:clamp(38px,6vw,68px);
+  margin:18px 0;
+
+  font-size:clamp(40px,6vw,68px);
 
   line-height:.98;
-
-  margin:18px 0;
 }
 
 .hero p{
@@ -519,36 +497,24 @@ button{
 
   border-radius:14px;
 
-  font-weight:800;
-
-  border:0;
+  font-weight:bold;
 }
 
 .primary{
-  background:#7c4dff;
+  border:0;
 
   color:white;
 
-  box-shadow:
-    0 10px 25px rgba(124,77,255,.25);
-}
-
-.primary:hover{
-  transform:translateY(-2px);
+  background:#7c4dff;
 }
 
 .secondary{
+  border:1px solid #303957;
+
   background:#1c243d;
 
   color:white;
-
-  border:1px solid #303957;
 }
-
-
-/* =========================
-   STATS
-========================= */
 
 .stats{
   padding:20px;
@@ -561,34 +527,30 @@ button{
 }
 
 .stat{
-  background:#1a223c;
+  padding:25px;
 
   border-radius:20px;
 
-  padding:25px;
+  background:#1a223c;
 }
 
-.stat .num{
-  font-size:48px;
+.num{
+  font-size:45px;
+
   font-weight:900;
 }
 
-.stat .label{
-  color:#aab2cc;
+.label{
   margin-top:5px;
+
+  color:#aab2cc;
 }
-
-
-/* =========================
-   FEATURES
-========================= */
 
 .sectionTitle{
   margin:45px 0 18px;
 }
 
 .sectionTitle h2{
-  margin:0;
   font-size:30px;
 }
 
@@ -603,6 +565,7 @@ button{
 
 .feature{
   padding:25px;
+
   min-height:180px;
 }
 
@@ -610,12 +573,9 @@ button{
   font-size:30px;
 }
 
-.feature h3{
-  margin-bottom:8px;
-}
-
 .feature p{
   color:#aab2cc;
+
   line-height:1.6;
 }
 
@@ -632,7 +592,7 @@ button{
   padding:30px 20px 70px;
 }
 
-.dash{
+.dashboardGrid{
   display:grid;
 
   grid-template-columns:220px 1fr;
@@ -640,20 +600,17 @@ button{
   gap:20px;
 }
 
-.side{
+.sidebar{
   padding:14px;
 
   height:fit-content;
 
   position:sticky;
-
   top:90px;
 }
 
-.side button{
+.sidebar button{
   width:100%;
-
-  text-align:left;
 
   padding:13px;
 
@@ -666,23 +623,25 @@ button{
   background:transparent;
 
   color:#cbd2ea;
+
+  text-align:left;
 }
 
-.side button:hover,
-.side button.active{
+.sidebar button:hover{
   background:#202946;
+
   color:white;
 }
 
 .content{
-  padding:25px;
+  padding:28px;
 }
 
 .content h2{
   margin-top:0;
 }
 
-.formBox{
+.form{
   display:grid;
 
   gap:12px;
@@ -690,8 +649,8 @@ button{
   margin-top:20px;
 }
 
-.formBox input,
-.formBox select{
+.form input,
+.form select{
   width:100%;
 
   padding:14px;
@@ -708,11 +667,11 @@ button{
 }
 
 .questionList{
-  margin-top:25px;
-
   display:grid;
 
   gap:12px;
+
+  margin-top:25px;
 }
 
 .question{
@@ -739,14 +698,15 @@ button{
 
   display:flex;
 
-  justify-content:center;
   align-items:center;
+
+  justify-content:center;
 
   padding:30px;
 
   background:
     radial-gradient(
-      circle at center,
+      circle,
       #192347,
       #080d1d 70%
     );
@@ -766,53 +726,46 @@ button{
   border:1px solid #303d75;
 
   border-radius:30px;
-
-  box-shadow:
-    0 20px 80px rgba(0,0,0,.35);
 }
 
 .liveTag{
   display:inline-block;
 
-  color:#27d9c3;
-
-  border:1px solid #27d9c3;
-
   padding:7px 13px;
 
   border-radius:30px;
 
-  font-size:13px;
+  border:1px solid #27d9c3;
 
-  margin-bottom:25px;
+  color:#27d9c3;
 }
 
 .presentationCard h1{
   font-size:clamp(35px,6vw,65px);
-
-  margin:10px 0 20px;
 }
 
 .joinCode{
-  font-size:18px;
   color:#aab2cc;
+
+  font-size:18px;
 }
 
 .joinCode strong{
   color:#27d9c3;
+
   font-size:26px;
 }
 
-.exitBtn{
+.exit{
   margin-top:30px;
 
   padding:13px 20px;
 
-  background:#202946;
+  border-radius:12px;
 
   border:1px solid #3a466d;
 
-  border-radius:12px;
+  background:#202946;
 
   color:white;
 }
@@ -822,104 +775,35 @@ button{
    TOAST
 ========================= */
 
-.toast{
+#toast{
   position:fixed;
 
   left:50%;
   bottom:25px;
 
-  transform:
-    translateX(-50%)
-    translateY(100px);
+  transform:translateX(-50%);
 
-  padding:13px 20px;
-
-  background:#1d2745;
-
-  border:1px solid #39466e;
+  padding:14px 20px;
 
   border-radius:12px;
 
+  background:#202946;
+
+  border:1px solid #3a466d;
+
   color:white;
-
-  opacity:0;
-
-  transition:.3s;
-
-  z-index:99999;
-
-  max-width:90%;
-
-  text-align:center;
-}
-
-.toast.show{
-  opacity:1;
-
-  transform:
-    translateX(-50%)
-    translateY(0);
-}
-
-
-/* =========================
-   LOADING
-========================= */
-
-.loginLoading{
-  position:fixed;
-
-  inset:0;
-
-  z-index:10000;
-
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:center;
-  align-items:center;
-
-  background:#080d1d;
 
   opacity:0;
 
   pointer-events:none;
 
   transition:.3s;
+
+  z-index:99999;
 }
 
-.loginLoading.show{
+#toast.show{
   opacity:1;
-  pointer-events:auto;
-}
-
-.loader{
-  width:55px;
-  height:55px;
-
-  border-radius:50%;
-
-  border:4px solid #252e4d;
-
-  border-top-color:#27d9c3;
-  border-right-color:#7c4dff;
-
-  animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.loadingText{
-  margin-top:18px;
-
-  color:#aab2cc;
-
-  font-size:14px;
 }
 
 
@@ -937,16 +821,12 @@ button{
     grid-template-columns:1fr;
   }
 
-  .dash{
+  .dashboardGrid{
     grid-template-columns:1fr;
   }
 
-  .side{
+  .sidebar{
     position:static;
-  }
-
-  .top{
-    padding:12px 15px;
   }
 
   .badge{
@@ -956,52 +836,38 @@ button{
   .userName{
     display:none;
   }
-
-  .heroText{
-    padding:28px;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
 }
 
 @media(max-width:500px){
 
-  .loginPage{
+  #loginPage{
     padding:12px;
   }
 
   .loginCard{
-    padding:27px 20px;
-    border-radius:22px;
+    padding:25px 20px;
   }
 
   .loginCard h1{
     font-size:30px;
   }
 
-  .loginSubtitle{
-    font-size:14px;
+  .heroText{
+    padding:28px;
   }
 
-  .loginOptions{
-    font-size:12px;
+  .stats{
+    grid-template-columns:1fr;
   }
 
   .presentationCard{
     padding:30px 20px;
   }
 
-  .hero h1{
-    font-size:42px;
-  }
-
-  .stats{
-    grid-template-columns:1fr;
+  .top{
+    padding:10px 15px;
   }
 }
-
 </style>
 </head>
 
@@ -1010,10 +876,10 @@ button{
 
 
 <!-- =========================
-     LOGIN PAGE
+     LOGIN
 ========================= -->
 
-<section id="loginPage" class="loginPage">
+<section id="loginPage">
 
   <div class="loginCard">
 
@@ -1028,9 +894,9 @@ button{
 
     <h1>Welcome back 👋</h1>
 
-    <p class="loginSubtitle">
+    <p class="loginText">
       Sign in to your PulseVote workspace
-      and continue creating amazing presentations.
+      and continue creating interactive presentations.
     </p>
 
 
@@ -1042,7 +908,7 @@ button{
       id="username"
       class="loginInput"
       type="text"
-      placeholder="you@example.com"
+      placeholder="Enter username"
       autocomplete="username"
     >
 
@@ -1057,13 +923,13 @@ button{
         id="password"
         class="loginInput"
         type="password"
-        placeholder="Enter your password"
+        placeholder="Enter password"
         autocomplete="current-password"
       >
 
       <button
-        class="eyeButton"
         id="eyeButton"
+        class="eyeButton"
         type="button"
       >
         👁
@@ -1085,26 +951,27 @@ button{
 
       </label>
 
-      <a
-        href="#"
-        id="forgotPassword"
-      >
+      <a href="#" id="forgot">
         Forgot password?
       </a>
 
     </div>
 
 
+    <!-- IMPORTANT: INLINE onclick -->
+    <!-- This makes the login work even if event listeners fail -->
+
     <button
       id="loginButton"
       class="loginButton"
       type="button"
+      onclick="login()"
     >
       LOGIN →
     </button>
 
 
-    <div class="orDivider">
+    <div class="divider">
 
       <span></span>
 
@@ -1128,17 +995,14 @@ button{
 
       Don't have an account?
 
-      <a
-        href="#"
-        id="createAccount"
-      >
+      <a href="#" id="createAccount">
         Create account
       </a>
 
     </p>
 
 
-    <div class="onlineUsers">
+    <div class="online">
 
       <span class="liveDot"></span>
 
@@ -1152,31 +1016,10 @@ button{
 
 
 <!-- =========================
-     LOGIN LOADING
-========================= -->
-
-<div
-  id="loginLoading"
-  class="loginLoading"
->
-
-  <div class="loader"></div>
-
-  <div class="loadingText">
-    Entering PulseVote...
-  </div>
-
-</div>
-
-
-<!-- =========================
      APPLICATION
 ========================= -->
 
-<div
-  id="app"
-  class="hidden"
->
+<div id="app" class="hidden">
 
 
 <header class="top">
@@ -1199,8 +1042,8 @@ button{
     </span>
 
     <button
-      id="logoutButton"
-      class="logoutBtn"
+      id="logout"
+      class="logout"
       type="button"
     >
       Logout
@@ -1220,7 +1063,6 @@ button{
   <div class="wrap">
 
     <section class="hero">
-
 
       <div class="panel heroText">
 
@@ -1264,54 +1106,23 @@ button{
       <div class="panel stats">
 
         <div class="stat">
-
-          <div class="num">
-            3
-          </div>
-
-          <div class="label">
-            Sample questions
-          </div>
-
+          <div class="num">3</div>
+          <div class="label">Sample questions</div>
         </div>
 
-
         <div class="stat">
-
-          <div class="num">
-            24
-          </div>
-
-          <div class="label">
-            Demo responses
-          </div>
-
+          <div class="num">24</div>
+          <div class="label">Demo responses</div>
         </div>
 
-
         <div class="stat">
-
-          <div class="num">
-            4
-          </div>
-
-          <div class="label">
-            Question types
-          </div>
-
+          <div class="num">4</div>
+          <div class="label">Question types</div>
         </div>
 
-
         <div class="stat">
-
-          <div class="num">
-            1
-          </div>
-
-          <div class="label">
-            Simple workspace
-          </div>
-
+          <div class="num">1</div>
+          <div class="label">Simple workspace</div>
         </div>
 
       </div>
@@ -1329,7 +1140,6 @@ button{
 
 
     <section class="cards">
-
 
       <div class="panel feature">
 
@@ -1361,9 +1171,8 @@ button{
         </h3>
 
         <p>
-          Create multiple-choice
-          questions for classroom
-          activities and reviews.
+          Create multiple-choice questions
+          for classroom activities.
         </p>
 
       </div>
@@ -1381,8 +1190,7 @@ button{
 
         <p>
           Open a clean audience screen
-          that focuses on the current
-          question.
+          focused on the current question.
         </p>
 
       </div>
@@ -1403,44 +1211,28 @@ button{
   class="dashboard hidden"
 >
 
-  <div class="dash">
+  <div class="dashboardGrid">
 
 
-    <aside class="panel side">
+    <aside class="panel sidebar">
 
-      <button
-        id="workspaceButton"
-        class="active"
-        type="button"
-      >
+      <button id="workspace">
         🏠 Workspace
       </button>
 
-      <button
-        id="newQuestionButton"
-        type="button"
-      >
+      <button id="newQuestion">
         ➕ New Question
       </button>
 
-      <button
-        id="presentationButton"
-        type="button"
-      >
+      <button id="presentationButton">
         🖥 Presentation
       </button>
 
-      <button
-        id="aboutButton"
-        type="button"
-      >
+      <button id="about">
         ℹ️ About Project
       </button>
 
-      <button
-        id="backHomeButton"
-        type="button"
-      >
+      <button id="backHome">
         ← Back Home
       </button>
 
@@ -1458,15 +1250,14 @@ button{
       </p>
 
 
-      <div class="formBox">
+      <div class="form">
 
         <input
           id="presentationTitle"
           type="text"
-          placeholder="Presentation title"
           value="Classroom Pulse"
+          placeholder="Presentation title"
         >
-
 
         <input
           id="questionInput"
@@ -1474,19 +1265,29 @@ button{
           placeholder="Type your question..."
         >
 
-
         <select id="questionType">
 
-          <option>Multiple Choice</option>
-          <option>Yes / No</option>
-          <option>Rating</option>
-          <option>Open Question</option>
+          <option>
+            Multiple Choice
+          </option>
+
+          <option>
+            Yes / No
+          </option>
+
+          <option>
+            Rating
+          </option>
+
+          <option>
+            Open Question
+          </option>
 
         </select>
 
 
         <button
-          id="addQuestionButton"
+          id="addQuestion"
           class="primary"
           type="button"
         >
@@ -1562,7 +1363,7 @@ button{
       ● LIVE
     </div>
 
-    <h2 id="presentationTitleLive">
+    <h2 id="liveTitle">
       Classroom Pulse
     </h2>
 
@@ -1582,7 +1383,7 @@ button{
 
     <button
       id="exitPresentation"
-      class="exitBtn"
+      class="exit"
       type="button"
     >
       Exit Presentation
@@ -1592,6 +1393,7 @@ button{
 
 </section>
 
+
 </div>
 
 
@@ -1599,25 +1401,214 @@ button{
      TOAST
 ========================= -->
 
-<div
-  id="toast"
-  class="toast"
-></div>
+<div id="toast"></div>
 
 
 <script>
 
+/* ==================================================
+   PULSEVOTE JAVASCRIPT
+================================================== */
+
+
 /* =========================
-   ELEMENTS
+   LOGIN
 ========================= */
 
-const loginPage =
-  document.getElementById("loginPage");
+function login(){
 
-const loginButton =
-  document.getElementById("loginButton");
+  const username =
+    document
+      .getElementById("username")
+      .value
+      .trim();
 
-const usernameInput =
-  document.getElementById("username");
+  const password =
+    document
+      .getElementById("password")
+      .value
+      .trim();
 
-const
+
+  /* CHECK USERNAME */
+
+  if(username === ""){
+
+    alert("Please enter your username.");
+
+    document
+      .getElementById("username")
+      .focus();
+
+    return;
+
+  }
+
+
+  /* CHECK PASSWORD */
+
+  if(password === ""){
+
+    alert("Please enter your password.");
+
+    document
+      .getElementById("password")
+      .focus();
+
+    return;
+
+  }
+
+
+  /* DISPLAY USERNAME */
+
+  document
+    .getElementById("displayUser")
+    .textContent = username;
+
+
+  /* HIDE LOGIN */
+
+  document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+
+  /* SHOW APP */
+
+  document
+    .getElementById("app")
+    .classList.remove("hidden");
+
+
+  /* SHOW HOME */
+
+  document
+    .getElementById("home")
+    .classList.remove("hidden");
+
+
+  /* HIDE OTHER PAGES */
+
+  document
+    .getElementById("dashboard")
+    .classList.add("hidden");
+
+  document
+    .getElementById("presentation")
+    .classList.add("hidden");
+
+
+  window.scrollTo(0,0);
+
+
+  showToast(
+    "Welcome to PulseVote, " +
+    username +
+    "!"
+  );
+
+}
+
+
+/* =========================
+   PASSWORD EYE
+========================= */
+
+document
+  .getElementById("eyeButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      const password =
+        document.getElementById("password");
+
+      if(password.type === "password"){
+
+        password.type = "text";
+
+      }else{
+
+        password.type = "password";
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+document
+  .getElementById("password")
+  .addEventListener(
+    "keydown",
+    function(event){
+
+      if(event.key === "Enter"){
+
+        login();
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(
+      function(){
+
+        toast.classList.remove("show");
+
+      },
+      2500
+    );
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function openDashboard(){
+
+  document
+    .getElementById("home")
+    .classList.add("hidden");
+
+  document
+    .getElementById("presentation")
+    .classList.add("hidden");
+
+  document
+    .getElementById("dashboard")
+    .classList.remove("hidden");
+
+  window.scrollTo(0,0);
+
+}
+
+
+/* ========
