@@ -2,1375 +2,1622 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PulseVote — Interactive Presentation Platform</title>
 
-  <title>PulseVote — Interactive Presentation Platform</title>
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#080d1d;
+  color:#f5f7ff;
+  overflow-x:hidden;
+}
 
-  <style>
-
-    /* =========================
-       RESET
-    ========================= */
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #080d1d;
-      color: #f5f7ff;
-      overflow-x: hidden;
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
+button,input,select{
+  font:inherit;
+}
 
-    button {
-      cursor: pointer;
-    }
+button{
+  cursor:pointer;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.hidden{
+  display:none !important;
+}
 
 
-    /* =========================
-       LOGIN PAGE
-    ========================= */
+/* =========================
+   LOGIN
+========================= */
 
-    .loginPage {
-      position: fixed;
-      inset: 0;
+.loginPage{
+  position:fixed;
+  inset:0;
+  z-index:9999;
 
-      width: 100%;
-      min-height: 100vh;
+  min-height:100vh;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
-      padding: 20px;
+  padding:20px;
 
-      overflow-y: auto;
+  overflow-y:auto;
 
-      z-index: 9999;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(124,77,255,.22),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(39,217,195,.14),
+      transparent 35%
+    ),
+    #080d1d;
+}
 
-      background:
-        radial-gradient(
-          circle at 15% 20%,
-          rgba(124, 77, 255, .20),
-          transparent 35%
-        ),
-        radial-gradient(
-          circle at 85% 80%,
-          rgba(39, 217, 195, .12),
-          transparent 35%
-        ),
-        #080d1d;
-    }
+.loginCard{
+  width:100%;
+  max-width:470px;
 
-    .loginCard {
-      width: 100%;
-      max-width: 480px;
+  padding:38px;
 
-      padding: 38px;
+  background:rgba(21,27,50,.98);
 
-      background: rgba(21, 27, 50, .97);
+  border:1px solid #303d75;
+  border-radius:28px;
 
-      border: 1px solid #303d75;
-      border-radius: 28px;
+  box-shadow:
+    0 0 70px rgba(124,77,255,.18),
+    0 20px 80px rgba(0,0,0,.5);
 
-      box-shadow:
-        0 0 70px rgba(124, 77, 255, .18),
-        0 20px 80px rgba(0, 0, 0, .45);
+  animation:loginAppear .6s ease;
+}
 
-      animation: loginAppear .6s ease;
-    }
+@keyframes loginAppear{
+  from{
+    opacity:0;
+    transform:translateY(25px) scale(.97);
+  }
 
-    @keyframes loginAppear {
-      from {
-        opacity: 0;
-        transform: translateY(25px) scale(.97);
-      }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
 
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
+.loginLogo{
+  font-size:34px;
+  font-weight:900;
+  margin-bottom:12px;
+}
 
-    .loginLogo {
-      font-size: 34px;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
+.loginLogo span{
+  color:#27d9c3;
+}
 
-    .loginLogo span {
-      color: #27d9c3;
-    }
+.liveBadge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
 
-    .liveBadge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+  color:#27d9c3;
 
-      color: #27d9c3;
+  background:rgba(39,217,195,.08);
 
-      background: rgba(39, 217, 195, .08);
+  border:1px solid rgba(39,217,195,.25);
 
-      border: 1px solid rgba(39, 217, 195, .25);
+  padding:7px 12px;
 
-      padding: 7px 12px;
+  border-radius:50px;
 
-      border-radius: 50px;
+  font-size:12px;
+  font-weight:700;
 
-      font-size: 12px;
-      font-weight: 700;
+  margin-bottom:25px;
+}
 
-      margin-bottom: 25px;
-    }
+.liveDot{
+  width:8px;
+  height:8px;
 
-    .liveDot {
-      width: 8px;
-      height: 8px;
+  border-radius:50%;
 
-      border-radius: 50%;
+  background:#27d9c3;
 
-      background: #27d9c3;
+  box-shadow:0 0 12px #27d9c3;
 
-      box-shadow: 0 0 12px #27d9c3;
+  animation:livePulse 1.5s infinite;
+}
 
-      animation: livePulse 1.5s infinite;
-    }
+@keyframes livePulse{
+  0%,100%{
+    opacity:1;
+  }
 
-    @keyframes livePulse {
-      0%, 100% {
-        opacity: 1;
-      }
+  50%{
+    opacity:.3;
+  }
+}
 
-      50% {
-        opacity: .3;
-      }
-    }
+.loginCard h1{
+  margin:0 0 10px;
+  font-size:36px;
+}
 
-    .loginCard h1 {
-      margin: 0 0 10px;
+.loginSubtitle{
+  color:#aab2cc;
+  line-height:1.6;
+  margin-bottom:25px;
+}
 
-      font-size: 36px;
-    }
+.loginCard label{
+  display:block;
+  color:#f5f7ff;
+  font-weight:600;
+  margin:18px 0 8px;
+}
 
-    .loginSubtitle {
-      color: #aab2cc;
+.loginInput{
+  width:100%;
 
-      line-height: 1.6;
+  padding:15px 16px;
 
-      margin-bottom: 25px;
-    }
+  border-radius:14px;
 
-    .loginCard label {
-      display: block;
+  border:1px solid #344a91;
 
-      color: #f5f7ff;
+  background:#0e152b;
 
-      font-weight: 600;
+  color:white;
 
-      margin: 18px 0 8px;
-    }
+  outline:none;
 
-    .loginInput {
-      width: 100%;
+  transition:.2s;
+}
 
-      padding: 15px 16px;
+.loginInput::placeholder{
+  color:#6f7897;
+}
 
-      border-radius: 14px;
+.loginInput:focus{
+  border-color:#7c4dff;
 
-      border: 1px solid #344a91;
+  box-shadow:
+    0 0 0 3px rgba(124,77,255,.15);
+}
 
-      background: #0e152b;
+.passwordBox{
+  display:flex;
+  width:100%;
+}
 
-      color: white;
+.passwordBox .loginInput{
+  border-radius:14px 0 0 14px;
+}
 
-      outline: none;
+.eyeButton{
+  width:55px;
 
-      transition: .2s;
-    }
+  border:1px solid #344a91;
+  border-left:0;
 
-    .loginInput::placeholder {
-      color: #6f7897;
-    }
+  background:#0e152b;
 
-    .loginInput:focus {
-      border-color: #7c4dff;
+  color:white;
 
-      box-shadow:
-        0 0 0 3px rgba(124, 77, 255, .15);
-    }
+  border-radius:0 14px 14px 0;
+}
 
-    .passwordBox {
-      display: flex;
-      width: 100%;
-    }
+.loginOptions{
+  display:flex;
 
-    .passwordBox .loginInput {
-      border-radius: 14px 0 0 14px;
-    }
+  justify-content:space-between;
+  align-items:center;
 
-    .eyeButton {
-      width: 55px;
+  margin-top:15px;
 
-      border: 1px solid #344a91;
-      border-left: 0;
+  font-size:13px;
+}
 
-      background: #0e152b;
+.remember{
+  display:flex !important;
+  align-items:center;
 
-      color: white;
+  gap:7px;
 
-      border-radius: 0 14px 14px 0;
-    }
+  margin:0 !important;
 
-    .loginOptions {
-      display: flex;
+  color:#aab2cc !important;
+}
 
-      justify-content: space-between;
+.loginOptions a,
+.createAccount a{
+  color:#27d9c3;
+  text-decoration:none;
+  font-weight:700;
+}
 
-      align-items: center;
+.loginButton{
+  width:100%;
 
-      margin-top: 15px;
+  margin-top:25px;
 
-      font-size: 13px;
-    }
+  padding:16px;
 
-    .remember {
-      display: flex !important;
+  border:0;
 
-      align-items: center;
+  border-radius:14px;
 
-      gap: 7px;
+  color:white;
 
-      margin: 0 !important;
+  font-weight:800;
+  font-size:17px;
 
-      color: #aab2cc !important;
-    }
+  background:
+    linear-gradient(
+      90deg,
+      #7048ff,
+      #8b5cff
+    );
 
-    .loginOptions a,
-    .createAccount a {
-      color: #27d9c3;
+  box-shadow:
+    0 8px 25px rgba(124,77,255,.25);
 
-      text-decoration: none;
+  transition:.2s;
+}
 
-      font-weight: 700;
-    }
+.loginButton:hover{
+  transform:translateY(-2px);
 
-    .loginButton {
-      width: 100%;
+  box-shadow:
+    0 12px 35px rgba(124,77,255,.4);
+}
 
-      margin-top: 25px;
+.loginButton:active{
+  transform:scale(.98);
+}
 
-      padding: 16px;
+.orDivider{
+  display:flex;
+  align-items:center;
+  gap:12px;
 
-      border: 0;
+  margin:25px 0;
 
-      border-radius: 14px;
+  color:#69728f;
 
-      color: white;
+  font-size:13px;
+}
 
-      font-weight: 800;
+.orDivider span{
+  flex:1;
+  height:1px;
+  background:#303957;
+}
 
-      font-size: 17px;
+.googleButton{
+  width:100%;
 
-      background:
-        linear-gradient(
-          90deg,
-          #7048ff,
-          #8b5cff
-        );
+  padding:15px;
 
-      box-shadow:
-        0 8px 25px rgba(124, 77, 255, .2);
+  border-radius:14px;
 
-      transition: .2s;
-    }
+  background:transparent;
 
-    .loginButton:hover {
-      transform: translateY(-2px);
+  border:1px solid #344a91;
 
-      box-shadow:
-        0 12px 35px rgba(124, 77, 255, .4);
-    }
+  color:white;
+}
 
-    .orDivider {
-      display: flex;
+.googleButton:hover{
+  background:#1c2543;
+}
 
-      align-items: center;
+.createAccount{
+  text-align:center;
 
-      gap: 12px;
+  color:#aab2cc;
 
-      margin: 25px 0;
+  margin-top:25px;
+}
 
-      color: #69728f;
+.onlineUsers{
+  display:flex;
 
-      font-size: 13px;
-    }
+  justify-content:center;
+  align-items:center;
 
-    .orDivider span {
-      flex: 1;
+  gap:8px;
 
-      height: 1px;
+  margin-top:25px;
 
-      background: #303957;
-    }
+  color:#aab2cc;
 
-    .googleButton {
-      width: 100%;
+  font-size:13px;
+}
 
-      padding: 15px;
 
-      border-radius: 14px;
+/* =========================
+   MAIN APP
+========================= */
 
-      background: transparent;
+#app{
+  min-height:100vh;
+}
 
-      border: 1px solid #344a91;
+.top{
+  min-height:68px;
 
-      color: white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
-      transition: .2s;
-    }
+  gap:15px;
 
-    .googleButton:hover {
-      background: #1c2543;
-    }
+  padding:0 25px;
 
-    .createAccount {
-      text-align: center;
+  background:#0b1020;
 
-      color: #aab2cc;
+  border-bottom:1px solid #242c45;
 
-      margin-top: 25px;
-    }
+  position:sticky;
+  top:0;
 
-    .onlineUsers {
-      display: flex;
+  z-index:100;
+}
 
-      justify-content: center;
+.logo{
+  font-size:23px;
+  font-weight:900;
+}
 
-      align-items: center;
+.logo span{
+  color:#27d9c3;
+}
 
-      gap: 8px;
+.badge{
+  color:#cbd2ea;
 
-      margin-top: 25px;
+  background:#151b32;
 
-      color: #aab2cc;
+  padding:9px 14px;
 
-      font-size: 13px;
-    }
+  border-radius:30px;
 
+  font-size:13px;
+}
 
-    /* =========================
-       MAIN APP
-    ========================= */
+.userArea{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-    #app {
-      min-height: 100vh;
-    }
+.userName{
+  color:#aab2cc;
+  font-size:13px;
+}
 
-    .top {
-      height: 68px;
+.logoutBtn{
+  border:1px solid #343d61;
 
-      display: flex;
+  background:transparent;
 
-      align-items: center;
+  color:white;
 
-      justify-content: space-between;
+  padding:8px 12px;
 
-      padding: 0 25px;
+  border-radius:9px;
+}
 
-      background: #0b1020;
+.logoutBtn:hover{
+  background:#202946;
+}
 
-      border-bottom: 1px solid #242c45;
 
-      position: sticky;
+/* =========================
+   HOME
+========================= */
 
-      top: 0;
+.wrap{
+  max-width:1200px;
 
-      z-index: 100;
-    }
+  margin:auto;
 
-    .logo {
-      font-size: 23px;
+  padding:30px 20px 60px;
+}
 
-      font-weight: 900;
+.hero{
+  display:grid;
 
-      color: white;
-    }
+  grid-template-columns:1.2fr .8fr;
 
-    .logo span {
-      color: #27d9c3;
-    }
+  gap:20px;
 
-    .badge {
-      color: #cbd2ea;
+  margin-top:25px;
+}
 
-      background: #151b32;
+.panel{
+  background:
+    linear-gradient(
+      145deg,
+      #151b32,
+      #10162b
+    );
 
-      padding: 9px 14px;
+  border:1px solid #252e4d;
 
-      border-radius: 30px;
+  border-radius:26px;
 
-      font-size: 13px;
-    }
+  box-shadow:
+    0 15px 50px rgba(0,0,0,.18);
+}
 
-    .userArea {
-      display: flex;
+.heroText{
+  padding:38px;
+}
 
-      align-items: center;
+.eyebrow{
+  color:#27d9c3;
 
-      gap: 10px;
-    }
+  font-weight:800;
 
-    .userName {
-      color: #aab2cc;
+  letter-spacing:2px;
 
-      font-size: 13px;
-    }
+  font-size:14px;
+}
 
-    .logoutBtn {
-      border: 1px solid #343d61;
+.hero h1{
+  font-size:clamp(38px,6vw,68px);
 
-      background: transparent;
+  line-height:.98;
 
-      color: white;
+  margin:18px 0;
+}
 
-      padding: 8px 12px;
+.hero p{
+  color:#aab2cc;
 
-      border-radius: 9px;
-    }
+  font-size:18px;
 
+  line-height:1.7;
+}
 
-    /* =========================
-       HOME
-    ========================= */
+.actions{
+  display:flex;
 
-    .wrap {
-      max-width: 1200px;
+  flex-wrap:wrap;
 
-      margin: auto;
+  gap:12px;
 
-      padding: 30px 20px 60px;
-    }
+  margin-top:25px;
+}
 
-    .hero {
-      display: grid;
+.primary,
+.secondary{
+  padding:15px 22px;
 
-      grid-template-columns: 1.2fr .8fr;
+  border-radius:14px;
 
-      gap: 20px;
+  font-weight:800;
 
-      margin-top: 25px;
-    }
+  border:0;
+}
 
-    .panel {
-      background:
-        linear-gradient(
-          145deg,
-          #151b32,
-          #10162b
-        );
+.primary{
+  background:#7c4dff;
 
-      border: 1px solid #252e4d;
+  color:white;
 
-      border-radius: 26px;
+  box-shadow:
+    0 10px 25px rgba(124,77,255,.25);
+}
 
-      box-shadow:
-        0 15px 50px rgba(0,0,0,.18);
-    }
+.primary:hover{
+  transform:translateY(-2px);
+}
 
-    .heroText {
-      padding: 38px;
-    }
+.secondary{
+  background:#1c243d;
 
-    .eyebrow {
-      color: #27d9c3;
+  color:white;
 
-      font-weight: 800;
+  border:1px solid #303957;
+}
 
-      letter-spacing: 2px;
 
-      font-size: 14px;
-    }
+/* =========================
+   STATS
+========================= */
 
-    .hero h1 {
-      font-size: clamp(38px, 6vw, 68px);
+.stats{
+  padding:20px;
 
-      line-height: .98;
+  display:grid;
 
-      margin: 18px 0;
-    }
+  grid-template-columns:1fr 1fr;
 
-    .hero p {
-      color: #aab2cc;
+  gap:12px;
+}
 
-      font-size: 18px;
+.stat{
+  background:#1a223c;
 
-      line-height: 1.7;
-    }
+  border-radius:20px;
 
-    .actions {
-      display: flex;
+  padding:25px;
+}
 
-      flex-wrap: wrap;
+.stat .num{
+  font-size:48px;
+  font-weight:900;
+}
 
-      gap: 12px;
+.stat .label{
+  color:#aab2cc;
+  margin-top:5px;
+}
 
-      margin-top: 25px;
-    }
 
-    .primary,
-    .secondary {
-      padding: 15px 22px;
+/* =========================
+   FEATURES
+========================= */
 
-      border-radius: 14px;
+.sectionTitle{
+  margin:45px 0 18px;
+}
 
-      font-weight: 800;
+.sectionTitle h2{
+  margin:0;
+  font-size:30px;
+}
 
-      border: 0;
-    }
+.cards{
+  display:grid;
 
-    .primary {
-      background: #7c4dff;
+  grid-template-columns:
+    repeat(3,1fr);
 
-      color: white;
+  gap:15px;
+}
 
-      box-shadow:
-        0 10px 25px rgba(124,77,255,.25);
-    }
+.feature{
+  padding:25px;
+  min-height:180px;
+}
 
-    .secondary {
-      background: #1c243d;
+.featureIcon{
+  font-size:30px;
+}
 
-      color: white;
+.feature h3{
+  margin-bottom:8px;
+}
 
-      border: 1px solid #303957;
-    }
+.feature p{
+  color:#aab2cc;
+  line-height:1.6;
+}
 
 
-    /* =========================
-       STATS
-    ========================= */
+/* =========================
+   DASHBOARD
+========================= */
 
-    .stats {
-      padding: 20px;
+.dashboard{
+  max-width:1200px;
 
-      display: grid;
+  margin:auto;
 
-      grid-template-columns: 1fr 1fr;
+  padding:30px 20px 70px;
+}
 
-      gap: 12px;
-    }
+.dash{
+  display:grid;
 
-    .stat {
-      background: #1a223c;
+  grid-template-columns:220px 1fr;
 
-      border-radius: 20px;
+  gap:20px;
+}
 
-      padding: 25px;
-    }
+.side{
+  padding:14px;
 
-    .stat .num {
-      font-size: 48px;
+  height:fit-content;
 
-      font-weight: 900;
-    }
+  position:sticky;
 
-    .stat .label {
-      color: #aab2cc;
+  top:90px;
+}
 
-      margin-top: 5px;
-    }
+.side button{
+  width:100%;
 
+  text-align:left;
 
-    /* =========================
-       FEATURES
-    ========================= */
+  padding:13px;
 
-    .sectionTitle {
-      margin: 45px 0 18px;
-    }
+  margin-bottom:8px;
 
-    .sectionTitle h2 {
-      margin: 0;
+  border:0;
 
-      font-size: 30px;
-    }
+  border-radius:12px;
 
-    .cards {
-      display: grid;
+  background:transparent;
 
-      grid-template-columns:
-        repeat(3, 1fr);
+  color:#cbd2ea;
+}
 
-      gap: 15px;
-    }
+.side button:hover,
+.side button.active{
+  background:#202946;
+  color:white;
+}
 
-    .feature {
-      padding: 25px;
+.content{
+  padding:25px;
+}
 
-      min-height: 180px;
-    }
+.content h2{
+  margin-top:0;
+}
 
-    .featureIcon {
-      font-size: 30px;
-    }
+.formBox{
+  display:grid;
 
-    .feature h3 {
-      margin-bottom: 8px;
-    }
+  gap:12px;
 
-    .feature p {
-      color: #aab2cc;
+  margin-top:20px;
+}
 
-      line-height: 1.6;
-    }
+.formBox input,
+.formBox select{
+  width:100%;
 
+  padding:14px;
 
-    /* =========================
-       DASHBOARD
-    ========================= */
+  border-radius:12px;
 
-    .dashboard {
-      max-width: 1200px;
+  border:1px solid #303d75;
 
-      margin: auto;
+  background:#0e152b;
 
-      padding: 30px 20px 70px;
-    }
+  color:white;
 
-    .dash {
-      display: grid;
+  outline:none;
+}
 
-      grid-template-columns: 220px 1fr;
+.questionList{
+  margin-top:25px;
 
-      gap: 20px;
-    }
+  display:grid;
 
-    .side {
-      padding: 14px;
+  gap:12px;
+}
 
-      height: fit-content;
+.question{
+  padding:18px;
 
-      position: sticky;
+  border-radius:15px;
 
-      top: 90px;
-    }
+  background:#1a223c;
 
-    .side button {
-      width: 100%;
+  border:1px solid #2a3557;
+}
 
-      text-align: left;
+.question small{
+  color:#27d9c3;
+}
 
-      padding: 13px;
 
-      margin-bottom: 8px;
+/* =========================
+   PRESENTATION
+========================= */
 
-      border: 0;
+.presentation{
+  min-height:calc(100vh - 68px);
 
-      border-radius: 12px;
+  display:flex;
 
-      background: transparent;
+  justify-content:center;
+  align-items:center;
 
-      color: #cbd2ea;
-    }
+  padding:30px;
 
-    .side button:hover,
-    .side button.active {
-      background: #202946;
+  background:
+    radial-gradient(
+      circle at center,
+      #192347,
+      #080d1d 70%
+    );
+}
 
-      color: white;
-    }
+.presentationCard{
+  width:100%;
 
-    .content {
-      padding: 25px;
-    }
+  max-width:850px;
 
-    .content h2 {
-      margin-top: 0;
-    }
+  padding:50px;
 
-    .formBox {
-      display: grid;
+  text-align:center;
 
-      gap: 12px;
+  background:#151b32;
 
-      margin-top: 20px;
-    }
+  border:1px solid #303d75;
 
-    .formBox input,
-    .formBox select {
-      width: 100%;
+  border-radius:30px;
 
-      padding: 14px;
+  box-shadow:
+    0 20px 80px rgba(0,0,0,.35);
+}
 
-      border-radius: 12px;
+.liveTag{
+  display:inline-block;
 
-      border: 1px solid #303d75;
+  color:#27d9c3;
 
-      background: #0e152b;
+  border:1px solid #27d9c3;
 
-      color: white;
+  padding:7px 13px;
 
-      outline: none;
-    }
+  border-radius:30px;
 
-    .questionList {
-      margin-top: 25px;
+  font-size:13px;
 
-      display: grid;
+  margin-bottom:25px;
+}
 
-      gap: 12px;
-    }
+.presentationCard h1{
+  font-size:clamp(35px,6vw,65px);
 
-    .question {
-      padding: 18px;
+  margin:10px 0 20px;
+}
 
-      border-radius: 15px;
+.joinCode{
+  font-size:18px;
+  color:#aab2cc;
+}
 
-      background: #1a223c;
+.joinCode strong{
+  color:#27d9c3;
+  font-size:26px;
+}
 
-      border: 1px solid #2a3557;
-    }
+.exitBtn{
+  margin-top:30px;
 
-    .question small {
-      color: #27d9c3;
-    }
+  padding:13px 20px;
 
+  background:#202946;
 
-    /* =========================
-       PRESENTATION
-    ========================= */
+  border:1px solid #3a466d;
 
-    .presentation {
-      min-height: calc(100vh - 68px);
+  border-radius:12px;
 
-      display: flex;
+  color:white;
+}
 
-      justify-content: center;
 
-      align-items: center;
+/* =========================
+   TOAST
+========================= */
 
-      padding: 30px;
+.toast{
+  position:fixed;
 
-      background:
-        radial-gradient(
-          circle at center,
-          #192347,
-          #080d1d 70%
-        );
-    }
+  left:50%;
+  bottom:25px;
 
-    .presentationCard {
-      width: 100%;
+  transform:
+    translateX(-50%)
+    translateY(100px);
 
-      max-width: 850px;
+  padding:13px 20px;
 
-      padding: 50px;
+  background:#1d2745;
 
-      text-align: center;
+  border:1px solid #39466e;
 
-      background: #151b32;
+  border-radius:12px;
 
-      border: 1px solid #303d75;
+  color:white;
 
-      border-radius: 30px;
+  opacity:0;
 
-      box-shadow:
-        0 20px 80px rgba(0,0,0,.35);
-    }
+  transition:.3s;
 
-    .liveTag {
-      display: inline-block;
+  z-index:99999;
 
-      color: #27d9c3;
+  max-width:90%;
 
-      border: 1px solid #27d9c3;
+  text-align:center;
+}
 
-      padding: 7px 13px;
+.toast.show{
+  opacity:1;
 
-      border-radius: 30px;
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
 
-      font-size: 13px;
 
-      margin-bottom: 25px;
-    }
+/* =========================
+   LOADING
+========================= */
 
-    .presentationCard h1 {
-      font-size: clamp(35px, 6vw, 65px);
+.loginLoading{
+  position:fixed;
 
-      margin: 10px 0 20px;
-    }
+  inset:0;
 
-    .joinCode {
-      font-size: 18px;
+  z-index:10000;
 
-      color: #aab2cc;
-    }
+  display:flex;
 
-    .joinCode strong {
-      color: #27d9c3;
+  flex-direction:column;
 
-      font-size: 26px;
-    }
+  justify-content:center;
+  align-items:center;
 
-    .exitBtn {
-      margin-top: 30px;
+  background:#080d1d;
 
-      padding: 13px 20px;
+  opacity:0;
 
-      background: #202946;
+  pointer-events:none;
 
-      border: 1px solid #3a466d;
+  transition:.3s;
+}
 
-      border-radius: 12px;
+.loginLoading.show{
+  opacity:1;
+  pointer-events:auto;
+}
 
-      color: white;
-    }
+.loader{
+  width:55px;
+  height:55px;
 
+  border-radius:50%;
 
-    /* =========================
-       TOAST
-    ========================= */
+  border:4px solid #252e4d;
 
-    .toast {
-      position: fixed;
+  border-top-color:#27d9c3;
+  border-right-color:#7c4dff;
 
-      left: 50%;
+  animation:spin 1s linear infinite;
+}
 
-      bottom: 25px;
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
 
-      transform: translateX(-50%) translateY(100px);
+.loadingText{
+  margin-top:18px;
 
-      padding: 13px 20px;
+  color:#aab2cc;
 
-      background: #1d2745;
+  font-size:14px;
+}
 
-      border: 1px solid #39466e;
 
-      border-radius: 12px;
+/* =========================
+   MOBILE
+========================= */
 
-      color: white;
+@media(max-width:800px){
 
-      opacity: 0;
+  .hero{
+    grid-template-columns:1fr;
+  }
 
-      transition: .3s;
+  .cards{
+    grid-template-columns:1fr;
+  }
 
-      z-index: 99999;
-    }
+  .dash{
+    grid-template-columns:1fr;
+  }
 
-    .toast.show {
-      opacity: 1;
+  .side{
+    position:static;
+  }
 
-      transform:
-        translateX(-50%)
-        translateY(0);
-    }
+  .top{
+    padding:12px 15px;
+  }
 
+  .badge{
+    display:none;
+  }
 
-    /* =========================
-       MOBILE
-    ========================= */
+  .userName{
+    display:none;
+  }
 
-    @media (max-width: 800px) {
+  .heroText{
+    padding:28px;
+  }
 
-      .hero {
-        grid-template-columns: 1fr;
-      }
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+}
 
-      .cards {
-        grid-template-columns: 1fr;
-      }
+@media(max-width:500px){
 
-      .dash {
-        grid-template-columns: 1fr;
-      }
+  .loginPage{
+    padding:12px;
+  }
 
-      .side {
-        position: static;
-      }
+  .loginCard{
+    padding:27px 20px;
+    border-radius:22px;
+  }
 
-      .top {
-        padding: 0 15px;
-      }
+  .loginCard h1{
+    font-size:30px;
+  }
 
-      .badge {
-        display: none;
-      }
+  .loginSubtitle{
+    font-size:14px;
+  }
 
-      .userName {
-        display: none;
-      }
+  .loginOptions{
+    font-size:12px;
+  }
 
-      .heroText {
-        padding: 28px;
-      }
+  .presentationCard{
+    padding:30px 20px;
+  }
 
-      .stats {
-        grid-template-columns: 1fr 1fr;
-      }
+  .hero h1{
+    font-size:42px;
+  }
 
-    }
+  .stats{
+    grid-template-columns:1fr;
+  }
+}
 
-    @media (max-width: 500px) {
-
-      .loginPage {
-        padding: 12px;
-      }
-
-      .loginCard {
-        padding: 27px 20px;
-
-        border-radius: 22px;
-      }
-
-      .loginCard h1 {
-        font-size: 30px;
-      }
-
-      .loginSubtitle {
-        font-size: 14px;
-      }
-
-      .loginOptions {
-        font-size: 12px;
-      }
-
-      .presentationCard {
-        padding: 30px 20px;
-      }
-
-      .hero h1 {
-        font-size: 42px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-  </style>
+</style>
 </head>
 
 
 <body>
 
 
-  <!-- =================================
-       LOGIN
-  ================================== -->
+<!-- =========================
+     LOGIN PAGE
+========================= -->
 
-  <section id="loginPage" class="loginPage">
+<section id="loginPage" class="loginPage">
 
-    <div class="loginCard">
+  <div class="loginCard">
 
-      <div class="loginLogo">
-        Pulse<span>Vote</span>
+    <div class="loginLogo">
+      Pulse<span>Vote</span>
+    </div>
+
+    <div class="liveBadge">
+      <span class="liveDot"></span>
+      LIVE • INTERACTIVE
+    </div>
+
+    <h1>Welcome back 👋</h1>
+
+    <p class="loginSubtitle">
+      Sign in to your PulseVote workspace
+      and continue creating amazing presentations.
+    </p>
+
+
+    <label for="username">
+      Email or Username
+    </label>
+
+    <input
+      id="username"
+      class="loginInput"
+      type="text"
+      placeholder="you@example.com"
+      autocomplete="username"
+    >
+
+
+    <label for="password">
+      Password
+    </label>
+
+    <div class="passwordBox">
+
+      <input
+        id="password"
+        class="loginInput"
+        type="password"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+      >
+
+      <button
+        class="eyeButton"
+        id="eyeButton"
+        type="button"
+      >
+        👁
+      </button>
+
+    </div>
+
+
+    <div class="loginOptions">
+
+      <label class="remember">
+
+        <input
+          id="remember"
+          type="checkbox"
+        >
+
+        Remember me
+
+      </label>
+
+      <a
+        href="#"
+        id="forgotPassword"
+      >
+        Forgot password?
+      </a>
+
+    </div>
+
+
+    <button
+      id="loginButton"
+      class="loginButton"
+      type="button"
+    >
+      LOGIN →
+    </button>
+
+
+    <div class="orDivider">
+
+      <span></span>
+
+      OR
+
+      <span></span>
+
+    </div>
+
+
+    <button
+      id="googleButton"
+      class="googleButton"
+      type="button"
+    >
+      🌈 Continue with Google
+    </button>
+
+
+    <p class="createAccount">
+
+      Don't have an account?
+
+      <a
+        href="#"
+        id="createAccount"
+      >
+        Create account
+      </a>
+
+    </p>
+
+
+    <div class="onlineUsers">
+
+      <span class="liveDot"></span>
+
+      24 users online
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     LOGIN LOADING
+========================= -->
+
+<div
+  id="loginLoading"
+  class="loginLoading"
+>
+
+  <div class="loader"></div>
+
+  <div class="loadingText">
+    Entering PulseVote...
+  </div>
+
+</div>
+
+
+<!-- =========================
+     APPLICATION
+========================= -->
+
+<div
+  id="app"
+  class="hidden"
+>
+
+
+<header class="top">
+
+  <div class="logo">
+    Pulse<span>Vote</span>
+  </div>
+
+  <div class="badge">
+    Interactive Presentation Platform
+  </div>
+
+  <div class="userArea">
+
+    <span
+      id="displayUser"
+      class="userName"
+    >
+      Guest
+    </span>
+
+    <button
+      id="logoutButton"
+      class="logoutBtn"
+      type="button"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     HOME
+========================= -->
+
+<main id="home">
+
+  <div class="wrap">
+
+    <section class="hero">
+
+
+      <div class="panel heroText">
+
+        <div class="eyebrow">
+          PRESENT • ASK • ENGAGE
+        </div>
+
+        <h1>
+          Make every presentation interactive.
+        </h1>
+
+        <p>
+          Create questions, collect votes,
+          and show results in a clean
+          presentation screen.
+        </p>
+
+        <div class="actions">
+
+          <button
+            id="createPresentation"
+            class="primary"
+            type="button"
+          >
+            Create Presentation
+          </button>
+
+          <button
+            id="tryDemo"
+            class="secondary"
+            type="button"
+          >
+            Try Live Demo
+          </button>
+
+        </div>
+
       </div>
 
-      <div class="liveBadge">
-        <span class="liveDot"></span>
-        LIVE • INTERACTIVE
+
+      <div class="panel stats">
+
+        <div class="stat">
+
+          <div class="num">
+            3
+          </div>
+
+          <div class="label">
+            Sample questions
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="num">
+            24
+          </div>
+
+          <div class="label">
+            Demo responses
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="num">
+            4
+          </div>
+
+          <div class="label">
+            Question types
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="num">
+            1
+          </div>
+
+          <div class="label">
+            Simple workspace
+          </div>
+
+        </div>
+
       </div>
 
-      <h1>Welcome back 👋</h1>
+    </section>
 
-      <p class="loginSubtitle">
-        Sign in to your PulseVote workspace
-        and continue creating amazing presentations.
+
+    <div class="sectionTitle">
+
+      <h2>
+        What you can do
+      </h2>
+
+    </div>
+
+
+    <section class="cards">
+
+
+      <div class="panel feature">
+
+        <div class="featureIcon">
+          📊
+        </div>
+
+        <h3>
+          Live Polls
+        </h3>
+
+        <p>
+          Ask your audience a question
+          and display response results
+          instantly.
+        </p>
+
+      </div>
+
+
+      <div class="panel feature">
+
+        <div class="featureIcon">
+          🧠
+        </div>
+
+        <h3>
+          Quick Quiz
+        </h3>
+
+        <p>
+          Create multiple-choice
+          questions for classroom
+          activities and reviews.
+        </p>
+
+      </div>
+
+
+      <div class="panel feature">
+
+        <div class="featureIcon">
+          🎤
+        </div>
+
+        <h3>
+          Presentation Mode
+        </h3>
+
+        <p>
+          Open a clean audience screen
+          that focuses on the current
+          question.
+        </p>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<section
+  id="dashboard"
+  class="dashboard hidden"
+>
+
+  <div class="dash">
+
+
+    <aside class="panel side">
+
+      <button
+        id="workspaceButton"
+        class="active"
+        type="button"
+      >
+        🏠 Workspace
+      </button>
+
+      <button
+        id="newQuestionButton"
+        type="button"
+      >
+        ➕ New Question
+      </button>
+
+      <button
+        id="presentationButton"
+        type="button"
+      >
+        🖥 Presentation
+      </button>
+
+      <button
+        id="aboutButton"
+        type="button"
+      >
+        ℹ️ About Project
+      </button>
+
+      <button
+        id="backHomeButton"
+        type="button"
+      >
+        ← Back Home
+      </button>
+
+    </aside>
+
+
+    <div class="panel content">
+
+      <h2>
+        My Presentation
+      </h2>
+
+      <p style="color:#aab2cc;">
+        Build your interactive classroom presentation.
       </p>
 
 
-      <label for="username">
-        Email or Username
-      </label>
-
-      <input
-        id="username"
-        class="loginInput"
-        type="text"
-        placeholder="you@example.com"
-      >
-
-
-      <label for="password">
-        Password
-      </label>
-
-      <div class="passwordBox">
+      <div class="formBox">
 
         <input
-          id="password"
-          class="loginInput"
-          type="password"
-          placeholder="Enter your password"
+          id="presentationTitle"
+          type="text"
+          placeholder="Presentation title"
+          value="Classroom Pulse"
         >
 
+
+        <input
+          id="questionInput"
+          type="text"
+          placeholder="Type your question..."
+        >
+
+
+        <select id="questionType">
+
+          <option>Multiple Choice</option>
+          <option>Yes / No</option>
+          <option>Rating</option>
+          <option>Open Question</option>
+
+        </select>
+
+
         <button
-          class="eyeButton"
-          onclick="togglePassword()"
+          id="addQuestionButton"
+          class="primary"
           type="button"
         >
-          👁
+          Add Question
         </button>
 
       </div>
 
 
-      <div class="loginOptions">
+      <div
+        id="questionList"
+        class="questionList"
+      >
 
-        <label class="remember">
-          <input
-            id="remember"
-            type="checkbox"
-          >
+        <div class="question">
 
-          Remember me
-        </label>
+          <small>
+            Multiple Choice
+          </small>
 
-        <a href="#"
-           onclick="forgotPassword(event)">
-          Forgot password?
-        </a>
+          <h3>
+            Which topic should we discuss first?
+          </h3>
+
+        </div>
 
       </div>
 
 
-      <button
-        class="loginButton"
-        onclick="login()"
+      <div
+        style="
+          margin-top:25px;
+          padding:20px;
+          border-radius:18px;
+          background:#10182e;
+          border:1px solid #29365b;
+        "
       >
-        LOGIN →
-      </button>
 
+        <span style="color:#27d9c3;">
+          ● LIVE
+        </span>
 
-      <div class="orDivider">
+        &nbsp;
 
-        <span></span>
+        Join code:
 
-        OR
-
-        <span></span>
-
-      </div>
-
-
-      <button
-        class="googleButton"
-        onclick="googleDemo()"
-      >
-        🌈 Continue with Google
-      </button>
-
-
-      <p class="createAccount">
-
-        Don't have an account?
-
-        <a
-          href="#"
-          onclick="createAccount(event)"
-        >
-          Create account
-        </a>
-
-      </p>
-
-
-      <div class="onlineUsers">
-
-        <span class="liveDot"></span>
-
-        24 users online
+        <strong>
+          PULSE24
+        </strong>
 
       </div>
 
     </div>
 
-  </section>
+  </div>
 
+</section>
 
 
-  <!-- =================================
-       APPLICATION
-  ================================== -->
+<!-- =========================
+     PRESENTATION MODE
+========================= -->
 
-  <div id="app" class="hidden">
+<section
+  id="presentation"
+  class="presentation hidden"
+>
 
+  <div class="presentationCard">
 
-    <!-- HEADER -->
+    <div class="liveTag">
+      ● LIVE
+    </div>
 
-    <header class="top">
+    <h2 id="presentationTitleLive">
+      Classroom Pulse
+    </h2>
 
-      <div class="logo">
-        Pulse<span>Vote</span>
-      </div>
+    <h1 id="liveQuestion">
+      Which topic should we discuss first?
+    </h1>
 
-      <div class="badge">
-        Interactive Presentation Platform
-      </div>
+    <div class="joinCode">
 
-      <div class="userArea">
+      Join code:
 
-        <span
-          id="displayUser"
-          class="userName"
-        >
-          Guest
-        </span>
+      <strong>
+        PULSE24
+      </strong>
 
-        <button
-          class="logoutBtn"
-          onclick="logout()"
-        >
-          Logout
-        </button>
+    </div>
 
-      </div>
-
-    </header>
-
-
-
-    <!-- =================================
-         HOME
-    ================================== -->
-
-    <main id="home">
-
-      <div class="wrap">
-
-        <section class="hero">
-
-
-          <div class="panel heroText">
-
-            <div class="eyebrow">
-              PRESENT • ASK • ENGAGE
-            </div>
-
-            <h1>
-              Make every presentation interactive.
-            </h1>
-
-            <p>
-              Create questions, collect votes,
-              and show results in a clean
-              presentation screen.
-            </p>
-
-            <div class="actions">
-
-              <button
-                class="primary"
-                onclick="openDashboard()"
-              >
-                Create Presentation
-              </button>
-
-              <button
-                class="secondary"
-                onclick="startPresentation()"
-              >
-                Try Live Demo
-              </button>
-
-            </div>
-
-          </div>
-
-
-
-          <div class="panel stats">
-
-            <div class="stat">
-
-              <div class="num">
-                3
-              </div>
-
-              <div class="label">
-                Sample questions
-              </div>
-
-            </div>
-
-
-            <div class="stat">
-
-              <div class="num">
-                24
-              </div>
-
-              <div class="label">
-                Demo responses
-              </div>
-
-            </div>
-
-
-            <div class="stat">
-
-              <div class="num">
-                4
-              </div>
-
-              <div class="label">
-                Question types
-              </div>
-
-            </div>
-
-
-            <div class="stat">
-
-              <div class="num">
-                1
-              </div>
-
-              <div class="label">
-                Simple workspace
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-
-        <div class="sectionTitle">
-
-          <h2>
-            What you can do
-          </h2>
-
-        </div>
-
-
-        <section class="cards">
-
-
-          <div class="panel feature">
-
-            <div class="featureIcon">
-              📊
-            </div>
-
-            <h3>
-              Live Polls
-            </h3>
-
-            <p>
-              Ask your audience a question
-              and display response results
-              instantly.
-            </p>
-
-          </div>
-
-
-          <div class="panel feature">
-
-            <div class="featureIcon">
-              🧠
-            </div>
-
-            <h3>
-              Quick Quiz
-            </h3>
-
-            <p>
-              Create multiple-choice
-              questions for classroom
-              activities and reviews.
-            </p>
-
-          </div>
-
-
-          <div class="panel feature">
-
-            <div class="featureIcon">
-              🎤
-            </div>
-
-            <h3>
-              Presentation Mode
-            </h3>
-
-            <p>
-              Open a clean audience screen
-              that focuses on the current
-              question.
-            </p>
-
-          </div>
-
-        </section>
-
-      </div>
-
-    </main>
-
-
-
-    <!-- =================================
-         DASHBOARD
-    ================================== -->
-
-    <section
-      id="dashboard"
-      class="dashboard hidden"
+    <button
+      id="exitPresentation"
+      class="exitBtn"
+      type="button"
     >
+      Exit Presentation
+    </button>
 
-      <div class="dash">
+  </div>
+
+</section>
+
+</div>
 
 
-        <aside class="panel side">
+<!-- =========================
+     TOAST
+========================= -->
 
-          <button
-            class="active"
-            onclick="showWorkspace()"
-          >
-            🏠 Workspace
-          </button>
+<div
+  id="toast"
+  class="toast"
+></div>
 
-          <button
-            onclick="newQuestion()"
-          >
-            ➕ New Question
-          </button>
 
-          <button
-            onclick="startPresentation()"
-          >
-            🖥 Presentation
-          </button>
+<script>
 
-          <button
-            onclick="aboutProject()"
-          >
-            ℹ️ About Project
-          </button>
+/* =========================
+   ELEMENTS
+========================= */
 
-          <button
-            onclick="back
+const loginPage =
+  document.getElementById("loginPage");
+
+const loginButton =
+  document.getElementById("loginButton");
+
+const usernameInput =
+  document.getElementById("username");
+
+const
