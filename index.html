@@ -28,7 +28,85 @@ h1{font-size:clamp(36px,6vw,68px);line-height:.98;margin:12px 0 18px}.hero p{col
 @media(max-width:800px){.hero{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.dash{grid-template-columns:1fr}.side{display:flex;overflow:auto;gap:6px}.side button{min-width:max-content}.content{padding:18px}.heroText{padding:26px}}
 </style>
 </head>
-<body>
+<body><body>
+
+<!-- LOGIN PAGE -->
+<section id="loginPage" class="loginPage">
+
+  <div class="loginCard">
+
+    <div class="loginLogo">
+      Pulse<span>Vote</span>
+    </div>
+
+    <div class="liveBadge">
+      <span></span> LIVE • INTERACTIVE
+    </div>
+
+    <h1>Welcome back 👋</h1>
+
+    <p class="loginSubtitle">
+      Sign in to your PulseVote workspace
+      and continue creating amazing presentations.
+    </p>
+
+    <label>Email or Username</label>
+    <input
+      id="loginUsername"
+      type="text"
+      placeholder="you@example.com"
+    >
+
+    <label>Password</label>
+
+    <div class="passwordBox">
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Enter your password"
+      >
+
+      <button onclick="togglePassword()">👁</button>
+    </div>
+
+    <div class="loginOptions">
+      <label>
+        <input type="checkbox">
+        Remember me
+      </label>
+
+      <a href="#">Forgot password?</a>
+    </div>
+
+    <button class="loginButton" onclick="pulseLogin()">
+      LOGIN →
+    </button>
+
+    <div class="orDivider">
+      <span></span>
+      OR
+      <span></span>
+    </div>
+
+    <button class="googleButton">
+      🌈 Continue with Google
+    </button>
+
+    <p class="createAccount">
+      Don't have an account?
+      <a href="#">Create account</a>
+    </p>
+
+    <div class="onlineUsers">
+      <span></span> 24 users online
+    </div>
+
+  </div>
+
+</section>
+
+
+<header class="top">
 <header class="top">
   <div class="logo">Pulse<span>Vote</span></div>
   <div class="badge">Interactive Presentation Platform</div>
