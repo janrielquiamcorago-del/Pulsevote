@@ -1611,4 +1611,346 @@ function openDashboard(){
 }
 
 
-/* ========
+<script>
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function openDashboard(){
+
+  document
+    .getElementById("home")
+    .classList.add("hidden");
+
+  document
+    .getElementById("presentation")
+    .classList.add("hidden");
+
+  document
+    .getElementById("dashboard")
+    .classList.remove("hidden");
+
+  window.scrollTo(0,0);
+}
+
+
+/* =========================
+   BACK HOME
+========================= */
+
+function backHome(){
+
+  document
+    .getElementById("dashboard")
+    .classList.add("hidden");
+
+  document
+    .getElementById("presentation")
+    .classList.add("hidden");
+
+  document
+    .getElementById("home")
+    .classList.remove("hidden");
+
+  window.scrollTo(0,0);
+}
+
+
+/* =========================
+   CREATE PRESENTATION
+========================= */
+
+document
+  .getElementById("createPresentation")
+  .addEventListener("click", openDashboard);
+
+
+/* =========================
+   WORKSPACE
+========================= */
+
+document
+  .getElementById("workspace")
+  .addEventListener("click", openDashboard);
+
+
+/* =========================
+   NEW QUESTION
+========================= */
+
+document
+  .getElementById("newQuestion")
+  .addEventListener("click", function(){
+
+    openDashboard();
+
+    document
+      .getElementById("questionInput")
+      .focus();
+
+  });
+
+
+/* =========================
+   BACK HOME
+========================= */
+
+document
+  .getElementById("backHome")
+  .addEventListener("click", backHome);
+
+
+/* =========================
+   ADD QUESTION
+========================= */
+
+document
+  .getElementById("addQuestion")
+  .addEventListener("click", function(){
+
+    const input =
+      document.getElementById("questionInput");
+
+    const question =
+      input.value.trim();
+
+    const type =
+      document.getElementById("questionType").value;
+
+    if(question === ""){
+
+      showToast("Please type a question first.");
+
+      input.focus();
+
+      return;
+    }
+
+    const card =
+      document.createElement("div");
+
+    card.className = "question";
+
+    card.innerHTML =
+      "<small>" +
+      type +
+      "</small>" +
+      "<h3>" +
+      question +
+      "</h3>";
+
+    document
+      .getElementById("questionList")
+      .appendChild(card);
+
+    input.value = "";
+
+    showToast("Question added!");
+
+  });
+
+
+/* =========================
+   PRESENTATION
+========================= */
+
+function startPresentation(){
+
+  const title =
+    document
+      .getElementById("presentationTitle")
+      .value
+      .trim() || "Classroom Pulse";
+
+  const question =
+    document
+      .getElementById("questionInput")
+      .value
+      .trim() ||
+      "Which topic should we discuss first?";
+
+  document
+    .getElementById("liveTitle")
+    .textContent = title;
+
+  document
+    .getElementById("liveQuestion")
+    .textContent = question;
+
+  document
+    .getElementById("home")
+    .classList.add("hidden");
+
+  document
+    .getElementById("dashboard")
+    .classList.add("hidden");
+
+  document
+    .getElementById("presentation")
+    .classList.remove("hidden");
+
+  window.scrollTo(0,0);
+}
+
+
+/* =========================
+   TRY DEMO
+========================= */
+
+document
+  .getElementById("tryDemo")
+  .addEventListener(
+    "click",
+    startPresentation
+  );
+
+
+/* =========================
+   PRESENTATION BUTTON
+========================= */
+
+document
+  .getElementById("presentationButton")
+  .addEventListener(
+    "click",
+    startPresentation
+  );
+
+
+/* =========================
+   EXIT PRESENTATION
+========================= */
+
+document
+  .getElementById("exitPresentation")
+  .addEventListener(
+    "click",
+    openDashboard
+  );
+
+
+/* =========================
+   ABOUT
+========================= */
+
+document
+  .getElementById("about")
+  .addEventListener(
+    "click",
+    function(){
+
+      alert(
+        "PulseVote is an interactive presentation and polling platform prototype."
+      );
+
+    }
+  );
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+  .getElementById("logout")
+  .addEventListener(
+    "click",
+    function(){
+
+      document
+        .getElementById("app")
+        .classList.add("hidden");
+
+      document
+        .getElementById("dashboard")
+        .classList.add("hidden");
+
+      document
+        .getElementById("presentation")
+        .classList.add("hidden");
+
+      document
+        .getElementById("home")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("username")
+        .value = "";
+
+      document
+        .getElementById("password")
+        .value = "";
+
+    }
+  );
+
+
+/* =========================
+   FORGOT PASSWORD
+========================= */
+
+document
+  .getElementById("forgot")
+  .addEventListener(
+    "click",
+    function(event){
+
+      event.preventDefault();
+
+      alert(
+        "Password recovery is not connected yet."
+      );
+
+    }
+  );
+
+
+/* =========================
+   CREATE ACCOUNT
+========================= */
+
+document
+  .getElementById("createAccount")
+  .addEventListener(
+    "click",
+    function(event){
+
+      event.preventDefault();
+
+      alert(
+        "Account registration will be added later."
+      );
+
+    }
+  );
+
+
+/* =========================
+   GOOGLE
+========================= */
+
+document
+  .getElementById("googleButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      alert(
+        "Google login is a demo button for now."
+      );
+
+    }
+  );
+
+
+console.log("PulseVote loaded successfully.");
+
+</script>
+
+</body>
+</html>
